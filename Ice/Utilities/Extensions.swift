@@ -493,3 +493,21 @@ extension Sequence where Element == MenuBarItem {
         }
     }
 }
+
+extension NSWindow {
+    func getWindowId(_ name: String? = nil) -> CGWindowID? {
+        guard self.windowNumber < UInt32.max else {
+            let windows = WindowInfo.getAllWindows().filter { item in
+                item.ownerPID == NSRunningApplication.current.processIdentifier
+            }
+
+            let foundWindow = windows.first(where: { window in
+                window.title == name ?? self.title
+            })
+
+            return foundWindow?.windowID
+        }
+
+        return CGWindowID(self.windowNumber)
+    }
+}

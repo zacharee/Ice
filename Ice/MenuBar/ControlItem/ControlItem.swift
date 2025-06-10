@@ -66,7 +66,8 @@ final class ControlItem {
         guard let window else {
             return nil
         }
-        return CGWindowID(window.windowNumber)
+
+        return window.getWindowId("")
     }
 
     /// A Boolean value that indicates whether the control item serves as
